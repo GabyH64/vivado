@@ -1,0 +1,40 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 10/06/2026 07:28:45 PM
+// Design Name: 
+// Module Name: alu_datapath_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module alu_datapath_tb;
+    logic [1:0] operation;
+    logic [10:0] a;
+    logic [10:0] b;
+    logic [10:0] result;
+    
+    alu_datapath dut ( .operation(operation), .a(a), .b(b), .result(result) );
+    initial begin
+        operation = 2'b10; a = 11'b00000000011; b = 11'b00000000010; #10; //3 /2
+        operation = 2'b11; a = 11'b00000000011; b = 11'b00000000011; #10; // 3*3
+        operation = 2'b00; a = 11'b00000000011; b = 11'b00000000011; #10; // 3 + 3
+        operation = 2'b11; a = 11'b11111111111; b = 11'b00000000010; #10; // -1*2 withs 2s complemnt
+        operation = 2'b00; a = 11'b11111111111; b = 11'b00000000010; #10; // -1+2 with 2s complement
+        operation = 2'b01; a = 11'b00000000001; b = 11'b00000000010; #10; // 1-2
+        $finish;
+    end
+    
+endmodule
