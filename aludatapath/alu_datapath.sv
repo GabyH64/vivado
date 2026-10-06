@@ -29,9 +29,19 @@ module alu_datapath(
     // defining the operations
     // 00 = add      01 = subtract
     // 10 = divide   11 = multiply
+    logic neg_a = 1'b0;
+    logic neg_b = 1'b0;
+    logic [10:0] signed_a;
+    logic [10:0] signed_b;
+    logic [10:0] signed_result;
     always_comb begin
         case (operation)
             2'b00: begin //addition
+                if (a[10]) neg_a = 1'b1; //if a is negative, then set the boolean to 1
+                if (neg_a) signed_a = -a; //if boolean is true, set signed a to the normal version but we know it's negative
+                if (b[10]) neg_b = 1'b1; //if b is negative, then set boolean to 1
+                if (neg_b) signed_b = -b; //if boolean is 1, then flip b so we have the normal value
+                
                 assign result = a + b;
             end
             2'b01: begin //subtraction
