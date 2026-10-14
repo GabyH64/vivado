@@ -27,6 +27,9 @@ module alu_datapath(
     output logic signed [10:0] result
     );
     always_comb begin
+    // defining the operations
+    // 00 = add      01 = subtract
+    // 10 = divide   11 = multiply
         case (operation)
             2'b00: begin //addition
                 assign result = a + b;
