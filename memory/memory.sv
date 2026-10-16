@@ -45,6 +45,23 @@ module memory(
     end
     
     //next state logic
+    always_comb begin
+        case (state)
+            save_a: begin
+                if (where_store == 2'b01) next_state = save_op;
+            end
+            save_op: begin
+                if (where_store == 2'b10) next_state = save_b;
+            end
+            save_b: begin
+                if (where_store == 2'b11) next_state = save_result;
+            end 
+            save_result: begin
+                if (where_store == 2'b00) next_state = save_a;
+            end
+        endcase
+    end
+    
     
     
 endmodule
