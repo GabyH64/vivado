@@ -25,10 +25,14 @@ module memory(
     input logic [1:0] where_store,
     input logic clock,
     input logic [1:0] what_display,
-    input logic result [10:0],
+    input logic [10:0] result,
     output logic [10:0] a, b, display,
     output logic [1:0] operator    
     );
+    
+    logic [10:0] temp_a, temp_b, temp_result;
+    logic [1:0] temp_op;   
+    
     typedef enum logic [1:0]{
         save_a,
         save_op,
@@ -61,7 +65,31 @@ module memory(
             end
         endcase
     end
-    
+   
+   // saving logic depending on the state and on the falling edge so we're sure that we're in the right state
+   always_ff @ (negedge clock) begin
+    case (state)
+        save_a: begin
+            temp_a = {7'b0000000, keys};
+        end
+        save_op: begin
+            case(keys)
+                4'b1010: temp_op = 2'b00; //addition
+                4'b1011: temp_op = 2'b01; //subtraction
+                4'b1100: temp_op = 2'b10; // division
+                4'b1101: temp_op = 2'b11; //multiplication
+            endcase
+        end       
+        save_b: begin
+            temp_b = {7'b0000000, keys};
+        end
+        save_result: begin
+            temp_result = result;
+        end
+    endcase
+   end 
+   
+   // actually sending the logic out to the data alu 
     
     
 endmodule
