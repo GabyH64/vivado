@@ -64,6 +64,8 @@ module memory(
     end
    
    // saving logic depending on the state and on the falling edge so we're sure that we're in the right state
+   // result just automatically goes to the display because if we're saving the result then person probably 
+   // wants it right away
    always_ff @ (negedge clock) begin
     case (state)
         save_a: begin
@@ -86,8 +88,15 @@ module memory(
     endcase
    end 
    
-   // actually sending the logic out to the data alu 
-    
+   //display which i'm assuming will be set depending the state of the controller
+   always_ff @ (negedge clock) begin
+    case (what_display)
+        2'b00: display = a;
+        2'b01: display = operator;
+        2'b10: display = b;
+        2'b11: display = result;
+    endcase 
+   end 
     
 endmodule
 
