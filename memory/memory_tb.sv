@@ -24,25 +24,27 @@ module memory_tb(
     );
      logic [3:0] keys;    
      logic [1:0] where_store;
-     logic clock;        
+     logic clock = 0;        
      logic [1:0] what_display;
      logic [10:0] result; 
      logic [10:0] a, b, display;
      logic [1:0] operator;
+     logic [1:0] output_nextstate;
+     logic [1:0] state;
     
-    memory dut ( .keys(keys), .where_store(where_store), .clock(clock), .what_display(what_display),
-    .result(result), .a(a), .b(b), .display(display), .operator(operator) );
+    memory dut (.keys(keys), .where_store(where_store), .clock(clock), .what_display(what_display), .result(result), .a(a), .b(b), .display(display), .operator(operator), .output_nextstate(output_nextstate), .state(state) );
     always begin
-        clock = ~clock;
+        #5 clock = ~clock;
     end
     
-    initial begin
-        where_store = 2'b00; keys = 4'b0010; what_display = 2'b00; #10;
-        where_store = 2'b01; keys = 4'b1010; what_display = 2'b01; #10;
-        where_store = 2'b10; keys = 4'b0001; what_display = 2'b10; #10;
-        where_store = 2'b11; result = 4'b0011; what_display = 2'b11; #10;
     
-    $finish;
+    initial begin
+        where_store = 2'b01; keys = 4'b0010; what_display = 2'b00; #100;
+        where_store = 2'b10; keys = 4'b1010; what_display = 2'b01; #100;
+        where_store = 2'b11; keys = 4'b0001; what_display = 2'b10; #100;
+        where_store = 2'b00; result = 4'b0011; what_display = 2'b11; #100;
+    
+        $finish;
     end
     
     
