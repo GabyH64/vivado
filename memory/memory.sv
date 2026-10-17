@@ -27,7 +27,9 @@ module memory(
     input logic [1:0] what_display,
     input logic [10:0] result,
     output logic [10:0] a, b, display,
-    output logic [1:0] operator    
+    output logic [1:0] operator,
+    output logic [1:0] output_nextstate,
+    output logic [1:0] state   
     );
     
     typedef enum logic [1:0]{
@@ -41,8 +43,9 @@ module memory(
     state_t next_state;
     
     // to change to next state
-    always_ff @ (posedge clock) begin
+    always @ (posedge clock) begin
         state <= next_state;
+        output_nextstate <= next_state;
     end
     
     //next state logic
@@ -66,39 +69,36 @@ module memory(
    // saving logic depending on the state and on the falling edge so we're sure that we're in the right state
    // result just automatically goes to the display because if we're saving the result then person probably 
    // wants it right away
-   always_ff @ (negedge clock) begin
+   always @ (negedge clock) begin
     case (state)
         save_a: begin
-            a = {7'b0000000, keys};
+            a <= {7'b0000000, keys};
         end
         save_op: begin
             case(keys)
-                4'b1010: operator = 2'b00; //addition
-                4'b1011: operator = 2'b01; //subtraction
-                4'b1100: operator = 2'b10; // division
-                4'b1101: operator = 2'b11; //multiplication
+                4'b1010: operator <= 2'b00; //addition
+                4'b1011: operator <= 2'b01; //subtraction
+                4'b1100: operator <= 2'b10; // division
+                4'b1101: operator <= 2'b11; //multiplication
             endcase
         end       
         save_b: begin
-            b = {7'b0000000, keys};
+            b <= {7'b0000000, keys};
         end
         save_result: begin
-            display = result;
+            display <= result;
         end
     endcase
    end 
    
    //display which i'm assuming will be set depending the state of the controller
-   always_ff @ (negedge clock) begin
+   always @ (negedge clock) begin
     case (what_display)
-        2'b00: display = a;
-        2'b01: display = operator;
-        2'b10: display = b;
-        2'b11: display = result;
+        2'b00: display <= a;
+        2'b01: display <= operator;
+        2'b10: display <= b;
+        2'b11: display <= result;
     endcase 
    end 
     
 endmodule
-
-
-
