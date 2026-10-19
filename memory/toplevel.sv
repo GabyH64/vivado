@@ -3,7 +3,7 @@ module memory(
     input logic [3:0] keys,
     input logic [1:0] where_store,
     input logic clock,
-    input logic [1:0] what_display, GETTING RID OF 
+    input logic [1:0] what_display,
     input logic [10:0] result,
     output logic [10:0] a, b, display,
     output logic [1:0] operator,
@@ -20,7 +20,7 @@ module alu_datapath(
 
 module toplevel(
   input logic [3:0] keys,
-  input logic [1:0] where_store,
+  input logic [1:0] where_store, what_display,
   input logic clock,
   output logic [10:0] display,
 );
@@ -29,6 +29,6 @@ logic [10:0] result;
 logic [10:0] a, b;
 logic [1:0] operator;
 
-memory block1 (.keys(keys), .where_store(where_store), .clock(clock), .a(a), .b(b), .display(display),
+memory block1 (.keys(keys), .where_store(where_store), .what_display(what_display), .clock(clock), .a(a), .b(b), .display(display),
 .operator(operator), .result(result))
 alu_datapath block2 (.operation(operator), .a(a), .b(b), .result(result))
