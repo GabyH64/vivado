@@ -43,7 +43,7 @@ module memory_tb(
         $display("My state", state);
         where_store = 2'b01; #10; keys = 4'b1010; what_display = 2'b01; #100;
          $display("My state", state);
-        where_store = 2'b10; #10;  keys = 4'b0001; what_display = 2'b10; #100;
+        where_store = 2'b10; #10; keys = 4'b0001; what_display = 2'b10; #100;
          $display("My state", state);
         where_store = 2'b11; #10; result = 4'b0011; what_display = 2'b11; #100;
          $display("My state", state);
@@ -51,7 +51,7 @@ module memory_tb(
         where_store = 2'b00; #10; keys = 4'b0100; what_display = 2'b00; #100; 
         where_store = 2'b01; #10; keys = 4'b1101; what_display = 2'b01; #100;
         where_store = 2'b10; #10; keys = 4'b0010; what_display = 2'b10; #100;
-        where_store = 2'b11; #10; keys = 4'b1000; what_display = 2'b11; #100;
+        where_store = 2'b11; #10; result = 4'b1000; what_display = 2'b11; #100;
     
         $finish;
     end
