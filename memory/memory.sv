@@ -23,7 +23,7 @@
 module memory(
     input logic [3:0] keys,
     input logic [1:0] where_store,
-    input logic clock,
+    input logic clock, write_enable,
     input logic [1:0] what_display,
     input logic [10:0] result,
     output logic [10:0] a, b, display,
@@ -43,7 +43,7 @@ module memory(
     state_t next_state;
     
     // to change to next state
-    always @ (posedge clock) begin
+    always_ff @ (posedge clock) begin
         state <= next_state;
         output_nextstate <= next_state;
     end
@@ -73,7 +73,7 @@ module memory(
    // saving logic depending on the state and on the falling edge so we're sure that we're in the right state
    // result just automatically goes to the display because if we're saving the result then person probably 
    // wants it right away
-   always @ (negedge clock) begin
+    always_ff @ (negedge write_enable) begin
     case (state)
         save_a: begin
             a <= {7'b0000000, keys};
@@ -96,7 +96,7 @@ module memory(
    end 
    
    //display which i'm assuming will be set depending the state of the controller
-   always @ (negedge clock) begin
+   always_ff @ (negedge clock) begin
     case (what_display)
         2'b00: display <= a;
         2'b01: display <= operator;
