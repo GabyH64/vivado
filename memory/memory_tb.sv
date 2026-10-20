@@ -29,10 +29,10 @@ module memory_tb(
      logic [10:0] result; 
      logic [10:0] a, b, display;
      logic [1:0] operator;
-     logic [1:0] output_nextstate;
      logic [1:0] state;
     
-    memory dut (.keys(keys), .where_store(where_store), .clock(clock), .what_display(what_display), .result(result), .a(a), .b(b), .display(display), .operator(operator), .output_nextstate(output_nextstate), .state(state) );
+    memory dut (.keys(keys), .where_store(where_store), .clock(clock), .what_display(what_display), .result(result), 
+    .a(a), .b(b), .display(display), .operator(operator), .state(state) );
     always begin
         #5 clock = ~clock;
     end
