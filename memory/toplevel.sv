@@ -53,6 +53,6 @@ logic [1:0] operator;
 
 memory block1 (.keys(keys), .where_store(where_store), .what_display(what_display), .clock(clock), .a(a), .b(b), .display(display),
     .operator(operator), .result(result));
-alu_datapath block2 (.operation(operator), .a(a), .b(b), .result(result));
+alu_datapath block2 (.operator(operator), .a(a), .b(b), .result(result));
 
 endmodule
