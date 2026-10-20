@@ -48,6 +48,19 @@ module toplevel2_tb(
         write_enable = 1; #10; write_enable = 0; #15;
         
         where_store = 2'b11; what_display = 2'b11;
+        write_enable = 1; #10; write_enable = 0; #20;
+        
+        //seperation
+        where_store = 2'b00; what_display = 2'b00; keys = 4'b0100; //4
+        write_enable = 1; #10; write_enable = 0; #15; 
+        
+        where_store = 2'b01; what_display = 2'b01; keys = 4'b1101; //mltiply 
+        write_enable = 1; #10; write_enable = 0; #15; 
+        
+        where_store = 2'b10; what_display = 2'b10; keys = 4'b0010;  //2
+        write_enable = 1; #10; write_enable = 0; #15;
+        
+        where_store = 2'b11; what_display = 2'b11;
         write_enable = 1; #10; write_enable = 0; #15;
         
         $finish;
