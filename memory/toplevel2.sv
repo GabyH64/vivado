@@ -39,12 +39,10 @@ module toplevel2(
     input logic [3:0] keys,
     input logic [1:0] where_store, what_display,
     input logic clock, write_enable,
-    output logic [1:0] state,
+    output logic [1:0] state, operator,
     output logic [10:0] display,
-    output logic signed [10:0] a, b
+    output logic signed [10:0] a, b, result
     );
-    logic signed [10:0] result;
-    logic [1:0] operator;
     
     alu_datapath block1 ( .alu_operator(operator), .alu_a(a), .alu_b(b), .alu_result(result));
     memory2 block2 (.keys(keys), .where_store(where_store), .what_display(what_display),
