@@ -21,27 +21,27 @@
 
 
 module alu_datapath(
-    input logic [1:0] operator,
-    input logic signed [10:0] a,
-    input logic signed [10:0] b,
-    output logic signed [10:0] result
+    input logic [1:0] alu_operator,
+    input logic signed [10:0] alu_a,
+    input logic signed [10:0] alu_b,
+    output logic signed [10:0] alu_result
     );
     always_comb begin
     // defining the operations
     // 00 = add      01 = subtract
     // 10 = divide   11 = multiply
-        case (operator)
+        case (alu_operator)
             2'b00: begin //addition
-                assign result = a + b;
+                assign alu_result = alu_a + alu_b;
             end
             2'b01: begin //subtraction
-                assign result = a - b;
+                assign alu_result = alu_a - alu_b;
             end
             2'b10: begin //division
-                assign result = a/b;
+                assign alu_result = alu_a/alu_b;
             end
             2'b11: begin //multiplication
-                assign result = a * b;
+                assign alu_result = alu_a * alu_b;
             end
         endcase
     end
