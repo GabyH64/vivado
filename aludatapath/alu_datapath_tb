@@ -21,18 +21,18 @@
 
 
 module alu_datapath_tb;
-    logic [1:0] operation;
+    logic [1:0] operator;
     logic [10:0] a;
     logic [10:0] b;
     logic [10:0] result;
     
-    alu_datapath dut ( .operation(operation), .a(a), .b(b), .result(result) );
+    alu_datapath dut ( .operator(operator), .a(a), .b(b), .result(result) );
     initial begin
         // normal operations
-        operation = 2'b10; a = 11'b00000000011; b = 11'b00000000010; #10; // 3/2 = 1
-        operation = 2'b11; a = 11'b00000000011; b = 11'b00000000011; #10; // 3*3 = 9
-        operation = 2'b00; a = 11'b00000000011; b = 11'b00000000011; #10; // 3 + 3 = 6
-        operation = 2'b01; a = 11'b00000001111; b = 11'b00000000110; #10; // 15-6 = 9
+        operator = 2'b10; a = 11'b00000000011; b = 11'b00000000010; #10; // 3/2 = 1
+        operator = 2'b11; a = 11'b00000000011; b = 11'b00000000011; #10; // 3*3 = 9
+        operator = 2'b00; a = 11'b00000000011; b = 11'b00000000011; #10; // 3 + 3 = 6
+        operator = 2'b01; a = 11'b00000001111; b = 11'b00000000110; #10; // 15-6 = 9
 
         // working with negatives
         operation = 2'b10; a = 11'b11111111100; b = 11'b00000000010; #10; // -4/2 = -2
