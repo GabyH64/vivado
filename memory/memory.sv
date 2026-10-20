@@ -25,10 +25,10 @@ module memory(
     input logic [1:0] where_store,
     input logic clock, write_enable,
     input logic [1:0] what_display,
-    input logic [10:0] result,
-    output logic [10:0] a, b, display,
+    input logic signed [10:0] result,
+    output logic signed [10:0] a, b,
+    output logic [10:0] display,
     output logic [1:0] operator,
-    output logic [1:0] output_nextstate,
     output logic [1:0] state   
     );
     
@@ -39,13 +39,12 @@ module memory(
         save_result
     } state_t;
     
-    state_t state = save_a;
-    state_t next_state;
+    state_t state = save_a; 
+    state_t next_state ;
     
     // to change to next state
     always_ff @ (posedge clock) begin
         state <= next_state;
-        output_nextstate <= next_state;
     end
     
     //next state logic
@@ -67,13 +66,17 @@ module memory(
                 $display("currentstate is reslt");
                 if (where_store == 2'b00) next_state = save_a ;else next_state = save_result;
             end
+            default: begin
+                next_state = save_a;
+            end
+            
         endcase
     end
    
    // saving logic depending on the state and on the falling edge so we're sure that we're in the right state
    // result just automatically goes to the display because if we're saving the result then person probably 
    // wants it right away
-    always_ff @ (negedge write_enable) begin
+    always_ff @ (negedge clock) begin
     case (state)
         save_a: begin
             a <= {7'b0000000, keys};
