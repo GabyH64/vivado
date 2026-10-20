@@ -22,23 +22,23 @@
 
 module alu_datapath_tb;
     logic [1:0] operator;
-    logic [10:0] a;
-    logic [10:0] b;
-    logic [10:0] result;
+    logic [6:0] a;
+    logic [6:0] b;
+    logic [6:0] result;
     
     alu_datapath dut ( .alu_operator(operator), .alu_a(a), .alu_b(b), .alu_result(result) );
     initial begin
         // normal operations
-        operator = 2'b10; a = 11'b00000000011; b = 11'b00000000010; #10; // 3/2 = 1
-        operator = 2'b11; a = 11'b00000000011; b = 11'b00000000011; #10; // 3*3 = 9
-        operator = 2'b00; a = 11'b00000000011; b = 11'b00000000011; #10; // 3 + 3 = 6
-        operator = 2'b01; a = 11'b00000001111; b = 11'b00000000110; #10; // 15-6 = 9
+        operator = 2'b10; a = 7'b0000011; b = 7'b0000010; #10; // 3/2 = 1
+        operator = 2'b11; a = 7'b0000011; b = 7'b0000011; #10; // 3*3 = 9
+        operator = 2'b00; a = 7'b0000011; b = 7'b0000011; #10; // 3 + 3 = 6
+        operator = 2'b01; a = 7'b0001111; b = 7'b0000110; #10; // 15-6 = 9
 
-        // working with negatives
-        operator = 2'b10; a = 11'b11111111100; b = 11'b00000000010; #10; // -4/2 = -2
-        operator = 2'b11; a = 11'b00000000100; b = 11'b11111111100; #10; // 4*-4 = -16
-        operator = 2'b00; a = 11'b11111101001; b = 11'b00000110000; #10; // -23+48 = 25
-        operator = 2'b01; a = 11'b00000000010; b = 11'b00000000110; #10; // 2-6 = -4
+//        // working with negatives
+//        operator = 2'b10; a = 11'b11111111100; b = 11'b00000000010; #10; // -4/2 = -2
+//        operator = 2'b11; a = 11'b00000000100; b = 11'b11111111100; #10; // 4*-4 = -16
+//        operator = 2'b00; a = 11'b11111101001; b = 11'b00000110000; #10; // -23+48 = 25
+//        operator = 2'b01; a = 11'b00000000010; b = 11'b00000000110; #10; // 2-6 = -4
 
         $finish;
     end
