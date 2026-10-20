@@ -46,6 +46,7 @@ module toplevel2(
     
     alu_datapath block1 ( .alu_operator(operator), .alu_a(a), .alu_b(b), .alu_result(result));
     memory2 block2 (.keys(keys), .where_store(where_store), .what_display(what_display),
-    .clock(clock), .write_enable(write_enable), .state(state), .display(display), .a(a), .b(b), .result(result));
+    .clock(clock), .write_enable(write_enable), .state(state), .display(display), .a(a), .b(b), .result(result),
+    .operator(operator));
     
 endmodule
