@@ -32,19 +32,16 @@ module alu_datapath(
     // 10 = divide   11 = multiply
         case (alu_operator)
             2'b00: begin //addition
-                alu_result = alu_a + alu_b;
+                assign alu_result = alu_a + alu_b;
             end
             2'b01: begin //subtraction
-                alu_result = alu_a - alu_b;
+                assign alu_result = alu_a - alu_b;
             end
             2'b10: begin //division
-                if(alu_b ==0)
-                    alu_result = 0;
-                else
-                    alu_result = alu_a/alu_b;
+                assign alu_result = alu_a/alu_b;
             end
             2'b11: begin //multiplication
-                alu_result = alu_a * alu_b;
+                assign alu_result = alu_a * alu_b;
             end
         endcase
     end
