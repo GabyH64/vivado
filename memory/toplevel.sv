@@ -44,15 +44,17 @@ module toplevel(
   input logic [3:0] keys,
   input logic [1:0] where_store, what_display,
   input logic clock,
-  output logic [10:0] display
+  output logic signed [10:0] top_a, top_b, result,
+  output logic [10:0] display,
+  output logic [1:0] top_state
   );
 
-logic [10:0] result;
-logic [10:0] a, b;
-logic [1:0] operator;
+logic [10:0] top_result;
+logic [1:0] top_operator, top_state;
 
-memory block1 (.keys(keys), .where_store(where_store), .what_display(what_display), .clock(clock), .a(a), .b(b), .display(display),
-    .operator(operator), .result(result));
-alu_datapath block2 (.operator(operator), .a(a), .b(b), .result(result));
+memory block1 (.keys(keys), .where_store(where_store), .what_display(what_display), .clock(clock), .a(top_a), .b(top_b),
+    .display(display),
+    .operator(top_operator), .result(top_result), .state(top_state));
+alu_datapath block2 (.alu_operator(operator), .alu_a(a), .alu_b(b), .alu_result(result));
 
 endmodule
