@@ -95,12 +95,12 @@ module memory2(
    
    //display which i'm assuming will be set depending the state of the controller
    // do neg edge of clock because thats probably after the stuff has been set equal
-   always_comb begin
+   always_ff @ (negedge clock) begin
     case (what_display)
-        2'b00: display = a;
-        2'b01: display = operator;
-        2'b10: display = b;
-        2'b11: display = result;
+        2'b00: display <= a;
+        2'b01: display <= operator;
+        2'b10: display <= b;
+        2'b11: display <= result;
     endcase 
    end    
 endmodule
