@@ -25,12 +25,13 @@ module toplevel2_tb(
     logic [3:0] keys;
     logic [1:0] where_store, what_display;
     logic clock = 0, write_enable=0;
-    logic [1:0] state;
+    logic [1:0] state, operator;
     logic [10:0] display;
-    logic signed [10:0] a, b;
+    logic signed [10:0] a, b, result;
     
     toplevel2 dut (.keys(keys), .where_store(where_store), .what_display(what_display),
-    .clock(clock), .write_enable(write_enable), .state(state), .display(display), .a(a), .b(b));
+    .clock(clock), .write_enable(write_enable), .state(state), .display(display), .a(a), .b(b), .result(result),
+    .operator(operator));
     
     always begin
         #5 clock = ~clock;
