@@ -26,7 +26,7 @@ module alu_datapath_tb;
     logic [10:0] b;
     logic [10:0] result;
     
-    alu_datapath dut ( .operator(operator), .a(a), .b(b), .result(result) );
+    alu_datapath dut ( .alu_operator(operator), .alu_a(a), .alu_b(b), .alu_result(result) );
     initial begin
         // normal operations
         operator = 2'b10; a = 11'b00000000011; b = 11'b00000000010; #10; // 3/2 = 1
