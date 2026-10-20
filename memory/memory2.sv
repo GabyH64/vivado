@@ -87,8 +87,8 @@ module memory2(
         end
         save_result: begin
             display <= result;
-            a <= 0;
-            b <= 0;
+            //a <= 0;
+            //b <= 0;
         end
     endcase
    end
