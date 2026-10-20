@@ -40,14 +40,14 @@ module toplevel2(
     input logic [1:0] where_store, what_display,
     input logic clock, write_enable,
     output logic [1:0] state,
-    output logic [10:0] display
+    output logic [10:0] display,
+    output logic signed [10:0] a, b
     );
-    logic signed [10:0] a, b;
     logic signed [10:0] result;
     logic [1:0] operator;
     
     alu_datapath block1 ( .alu_operator(operator), .alu_a(a), .alu_b(b), .alu_result(result));
     memory2 block2 (.keys(keys), .where_store(where_store), .what_display(what_display),
-    .clock(clock), .write_enable(write_enable), .state(state), .display(display));
+    .clock(clock), .write_enable(write_enable), .state(state), .display(display), .a(a), .b(b), .result(result));
     
 endmodule
