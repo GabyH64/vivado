@@ -21,7 +21,7 @@
 
 
 module alu_datapath(
-    input logic [1:0] operation,
+    input logic [1:0] operator,
     input logic signed [10:0] a,
     input logic signed [10:0] b,
     output logic signed [10:0] result
@@ -30,7 +30,7 @@ module alu_datapath(
     // defining the operations
     // 00 = add      01 = subtract
     // 10 = divide   11 = multiply
-        case (operation)
+        case (operator)
             2'b00: begin //addition
                 assign result = a + b;
             end
