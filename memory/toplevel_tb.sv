@@ -24,19 +24,19 @@ module toplevel_tb(
 );
   logic [3:0] keys;
   logic [1:0] where_store;
-  logic clock;
+  logic clock = 0;
   logic [1:0] what_display;
-  logic [10:0] result;
-  logic [10:0] a, b, display;
+  logic signed [10:0] result;
+  logic signed [10:0] a, b;
+  logic [10:0] display;
   logic [1:0] operator;
-  logic [1:0] output_nextstate;
   logic [1:0] state;
 
-  toplevel dut (.keys(keys), .where_store(where_store), .clock(clock), .what_display(what_display),
-              .result(result), .a(a), .b(b), .display(display), .operator(operator));
+  toplevel dut (.keys(keys), .where_store(where_store), .clock(clock), .what_display(what_display), .top_a(a), 
+    .top_b(b), .display(display), .result(result));
 
   always begin
-        #1 clock = ~clock;
+        #5 clock = ~clock;
     end
 
   initial begin
