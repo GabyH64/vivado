@@ -24,7 +24,7 @@ module memory2_tb(
     );
     logic [3:0] keys;
     logic [1:0] where_store, what_display;
-    logic clock = 0, write_enable;
+    logic clock = 0, write_enable=0;
     logic signed [10:0] result;
     logic signed [10:0] a, b;
     logic [10:0] display;
