@@ -51,6 +51,20 @@ module memory2_tb(
         
         where_store = 2'b11; what_display = 2'b11; result = 11'b00000000100; //store 11 = result, display 11 = result, result = 4
         write_enable = 1; #10; write_enable = 0; #15; //write enable ticks 
+        
+        //####################################################################
+        
+        where_store = 2'b00; what_display = 2'b00; keys = 4'b0001; //store 00 = a, display 00 = a, keys = 1
+        write_enable = 1; #10; write_enable = 0; #15; //write enable ticks 
+        
+        where_store = 2'b01; what_display = 2'b01; keys = 4'b1010; //store 01 = op, display 01 = op, keys = 10 = add
+        write_enable = 1; #10; write_enable = 0; #15; //write enable ticks 
+        
+        where_store = 2'b10; what_display = 2'b10; keys = 4'b0001; //store 10 = b, displayce 10 = b, keys = 1
+        write_enable = 1; #10; write_enable = 0; #15; //write enable ticks 
+        
+        where_store = 2'b11; what_display = 2'b11; result = 11'b00000000010; //store 11 = result, display 11 = result, result = 4
+        write_enable = 1; #10; write_enable = 0; #15; //write enable ticks 
         $finish;
     end
     
