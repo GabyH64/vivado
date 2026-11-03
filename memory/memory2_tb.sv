@@ -40,6 +40,7 @@ module memory2_tb(
     end
     
     initial begin
+        #10;
         where_store = 2'b00; what_display = 2'b00; keys = 4'b0010; //store 00 = a, display 00 = a, keys = 2
         write_enable = 1; #10; write_enable = 0; #15; //write enable ticks 
         
@@ -54,6 +55,7 @@ module memory2_tb(
         
         //####################################################################
         
+        #20;
         where_store = 2'b00; what_display = 2'b00; keys = 4'b0001; //store 00 = a, display 00 = a, keys = 1
         write_enable = 1; #10; write_enable = 0; #15; //write enable ticks 
         
