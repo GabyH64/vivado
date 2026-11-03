@@ -38,8 +38,8 @@ module memory2(
             save_result
         } state_t;
         
-    state_t state = save_a; 
-    state_t next_state ;  
+    state_t state = save_result; 
+    state_t next_state;  
     
     // to change to next state
     always_ff @ (posedge clock) begin
@@ -72,7 +72,7 @@ module memory2(
     always_ff @ (negedge write_enable) begin
     case (state)
         save_a: begin
-            a <= keys;
+            a <= a + keys;
         end
         save_op: begin
             case(keys)
@@ -83,12 +83,12 @@ module memory2(
             endcase
         end       
         save_b: begin
-            b <= keys;
+            b <= b + keys;
         end
         save_result: begin
             display <= result;
-            //a <= 0;
-            //b <= 0;
+            a <= 0;
+            b <= 0;
         end
     endcase
    end
