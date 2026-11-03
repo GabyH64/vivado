@@ -72,7 +72,7 @@ module memory2(
     always_ff @ (negedge write_enable) begin
     case (state)
         save_a: begin
-            a <= a + keys;
+            a <= a*11'b00000001010 + keys;
         end
         save_op: begin
             case(keys)
@@ -83,7 +83,7 @@ module memory2(
             endcase
         end       
         save_b: begin
-            b <= b + keys;
+            b <= b*11'b00000001010 + keys;
         end
         save_result: begin
             display <= result;
