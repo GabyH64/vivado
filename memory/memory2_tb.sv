@@ -40,17 +40,17 @@ module memory2_tb(
     end
     
     initial begin
-        where_store = 2'b00; what_display = 2'b00; keys = 4'b0010; 
-        write_enable = 1; #10; write_enable = 0; #15; 
+        where_store = 2'b00; what_display = 2'b00; keys = 4'b0010; //store 00 = a, display 00 = a, keys = 2
+        write_enable = 1; #10; write_enable = 0; #15; //write enable ticks 
         
-        where_store = 2'b01; what_display = 2'b01; keys = 4'b1010; 
-        write_enable = 1; #10; write_enable = 0; #15; 
+        where_store = 2'b01; what_display = 2'b01; keys = 4'b1010; //store 01 = op, display 01 = op, keys = 10 = add
+        write_enable = 1; #10; write_enable = 0; #15; //write enable ticks 
         
-        where_store = 2'b10; what_display = 2'b10; keys = 4'b0010;
-        write_enable = 1; #10; write_enable = 0; #15;
+        where_store = 2'b10; what_display = 2'b10; keys = 4'b0010; //store 10 = b, displayce 10 = b, keys = 2
+        write_enable = 1; #10; write_enable = 0; #15; //write enable ticks 
         
-        where_store = 2'b11; what_display = 2'b11; result = 11'b00000000100;
-        write_enable = 1; #10; write_enable = 0; #15;
+        where_store = 2'b11; what_display = 2'b11; result = 11'b00000000100; //store 11 = result, display 11 = result, result = 4
+        write_enable = 1; #10; write_enable = 0; #15; //write enable ticks 
         $finish;
     end
     
