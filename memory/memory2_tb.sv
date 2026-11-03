@@ -40,7 +40,25 @@ module memory2_tb(
     end
     
     initial begin
-        #10;
+        where_store = 2'b00; what_display = 2'b00; keys = 4'b0010; //store 00 = a, display 00 = a, keys = 2
+        write_enable = 1; #10; write_enable = 0; #15; //write enable ticks 
+        keys = 4'b0000; //keys = 0
+        write_enable = 1; #10; write_enable = 0; #15; //write enable ticks , a = 20 now
+        
+        where_store = 2'b01; what_display = 2'b01; keys = 4'b1010; //store 01 = op, display 01 = op, keys = 10 = add
+        write_enable = 1; #10; write_enable = 0; #15; //write enable ticks 
+        
+        where_store = 2'b10; what_display = 2'b10; keys = 4'b0010; //store 10 = b, displayce 10 = b, keys = 2
+        write_enable = 1; #10; write_enable = 0; #15; //write enable ticks 
+        keys = 4'b0000; //keys = 0
+        write_enable = 1; #10; write_enable = 0; #15; //write enable ticks , b = 20 now
+        
+        where_store = 2'b11; what_display = 2'b11; result = 11'b00000101000; //store 11 = result, display 11 = result, 
+        //result = 40
+        write_enable = 1; #10; write_enable = 0; #15; //write enable ticks 
+    
+        //####################################################################
+    
         where_store = 2'b00; what_display = 2'b00; keys = 4'b0010; //store 00 = a, display 00 = a, keys = 2
         write_enable = 1; #10; write_enable = 0; #15; //write enable ticks 
         
