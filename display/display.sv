@@ -29,7 +29,7 @@ module display(
     
     int display_counter = 0;
     int wait_counter = 0;
-    
+    logic [7:0] sign, hundreds, tens, ones;
     
     typedef enum logic [7:0] {
     display_AN0,
@@ -44,6 +44,12 @@ module display(
 
     state_t state = display_AN0;
     state_t next_state;
+    
+    //taking the input and taking it apart to display the sign, hundreds, tens, and ones place
+    always_comb begin
+        if (to_display < 0)
+            sign = 8'b
+    end
     
     // to change to next state
     always_ff @ (posedge clock) begin
@@ -63,12 +69,6 @@ module display(
             wait_3: if (wait_counter == 20) next_state = display_AN0; else next_state = wait_3;
             default: next_state = display_AN0;
         endcase
-    end
-    
-    //taking the input and taking it apart to display the sign, hundreds, tens, and ones place
-    always_comb begin
-        if (to_display < 0)
-            
     end
 
     // then based on the state we do different things
