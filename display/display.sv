@@ -106,6 +106,35 @@ module display(
        // dealing with the tens
        display_copy = display_copy % 11'b00001100100; //modulus by 100 to get only the tens place max
        tens_compare = display_copy / 11'b00000001010; //divide by 10 and it should truncate down
+       //depending on how many tens there are, change the display
+       case (tens_compare)
+           11'b00000000000: tens = 8'b11000000; // 0
+           11'b00000000001: tens = 8'b11111001; // 1
+           11'b00000000010: tens = 8'b10100100; // 2
+           11'b00000000011: tens = 8'b10110000; // 3
+           11'b00000000100: tens = 8'b10011001; // 4
+           11'b00000000101: tens = 8'b10010010; // 5
+           11'b00000000110: tens = 8'b10000010; // 6
+           11'b00000000111: tens = 8'b11111000; // 7
+           11'b00000001000: tens = 8'b10000000; // 8
+           11'b00000001001: tens = 8'b10010000; // 9
+           default: hundreds = 8'b01111111; //decimal point for error
+       endcase
+       
+       ones_compare = display_copy % 11'b00000001010; //modulus by 10 to get only the ones place max
+       case (ones_compare)
+           11'b00000000000: ones = 8'b11000000; // 0
+           11'b00000000001: ones = 8'b11111001; // 1
+           11'b00000000010: ones = 8'b10100100; // 2
+           11'b00000000011: ones = 8'b10110000; // 3
+           11'b00000000100: ones = 8'b10011001; // 4
+           11'b00000000101: ones = 8'b10010010; // 5
+           11'b00000000110: ones = 8'b10000010; // 6
+           11'b00000000111: ones = 8'b11111000; // 7
+           11'b00000001000: ones = 8'b10000000; // 8
+           11'b00000001001: ones = 8'b10010000; // 9
+           default: hundreds = 8'b01111111; //decimal point for error
+       endcase
     end
     
     // to change to next state
