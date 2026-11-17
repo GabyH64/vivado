@@ -30,6 +30,19 @@
            11'b00000000111:
            11'b00000001000:
            11'b00000001001:
+           
+           8'b10010000 // 9
+           8'b10000000 // 8
+           8'b11111000 // 7
+           8'b10000010 // 6
+           8'b10010010 // 5
+           8'b10011001 // 4
+           8'b10110000 // 3
+           8'b10100100 // 2
+           8'b11111001 // 1
+           8'b11000000 // 0
+           
+           
 */
 
 
@@ -73,20 +86,26 @@ module display(
         else // else the sign isn't on
             sign = 8'b11111111;
             
-       //dealing with hundreds place
+       //taking the to display number and figuring out how many hundreds are in it, it should truncate the decimals away
        hundreds_compare = display_copy/11'b00001100100; //divide the work by 100
+       // depending on how many hundreds there are, it changes the variable that is what will be displayed
        case(hundreds_compare)
-           11'b00000000000: hundreds = 
-           11'b00000000001:
-           11'b00000000010:
-           11'b00000000011:
-           11'b00000000100:
-           11'b00000000101:
-           11'b00000000110:
-           11'b00000000111:
-           11'b00000001000:
-           11'b00000001001:
+           11'b00000000000: hundreds = 8'b11000000; // 0
+           11'b00000000001: hundreds = 8'b11111001; // 1
+           11'b00000000010: hundreds = 8'b10100100; // 2
+           11'b00000000011: hundreds = 8'b10110000; // 3
+           11'b00000000100: hundreds = 8'b10011001; // 4
+           11'b00000000101: hundreds = 8'b10010010; // 5
+           11'b00000000110: hundreds = 8'b10000010; // 6
+           11'b00000000111: hundreds = 8'b11111000; // 7
+           11'b00000001000: hundreds = 8'b10000000; // 8
+           11'b00000001001: hundreds = 8'b10010000; // 9
+           default: hundreds = 8'b01111111; // turn on the just the decimal to let us know there is something wrong
        endcase 
+       
+       // dealing with the tens
+       display_copy = display_copy % 11'b00001100100; //modulus by 100 to get only the tens place max
+       tens_compare = display_copy / 11'b00000001010; //divide by 10 and it should truncate down
     end
     
     // to change to next state
