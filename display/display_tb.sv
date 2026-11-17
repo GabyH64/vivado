@@ -22,7 +22,7 @@
 
 module display_tb(
     );
-    logic clock;
+    logic clock=0;
     logic signed [10:0] to_display;
     logic [3:0] anodes;
     logic [7:0] cathodes;
