@@ -19,6 +19,18 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+/*
+           11'b00000000000:
+           11'b00000000001:
+           11'b00000000010:
+           11'b00000000011:
+           11'b00000000100:
+           11'b00000000101:
+           11'b00000000110:
+           11'b00000000111:
+           11'b00000001000:
+           11'b00000001001:
+*/
 
 module display(
     input logic clock,
@@ -31,6 +43,7 @@ module display(
     int display_counter = 0;
     int wait_counter = 0;
     logic [7:0] sign, hundreds, tens, ones;
+    logic [10:0] hundreds_compare, tens_compare, ones_compare;
     
     typedef enum logic [7:0] {
     display_AN0,
@@ -48,11 +61,30 @@ module display(
     
     //taking the input and taking it apart to display the sign, hundreds, tens, and ones place
     always_comb begin
-        
-        if (to_display < 0) // if the display output is negative then the sign will be turned on
-            sign = 8'b10111111;
+        display_copy = to_display;
+        //dealing with negative or not
+        if (display_copy < 0) // if the display output is negative then the sign will be turned on
+            begin
+                sign = 8'b10111111;
+                display_copy = display_copy * 11'b11111111111; //multiply the copy by -1 so it is positive for the others
+            end
         else // else the sign isn't on
             sign = 8'b11111111;
+            
+       //dealing with hundreds place
+       hundreds_compare = display_copy/11'b00001100100; //divide the work by 100
+       case(hundreds_compare)
+           11'b00000000000:
+           11'b00000000001:
+           11'b00000000010:
+           11'b00000000011:
+           11'b00000000100:
+           11'b00000000101:
+           11'b00000000110:
+           11'b00000000111:
+           11'b00000001000:
+           11'b00000001001:
+       endcase 
     end
     
     // to change to next state
