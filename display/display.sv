@@ -169,13 +169,53 @@ module display(
                 end
             wait_0:
                 begin
+                    display_counter <= 0;
+                    wait_counter <= wait_counter + 1;
+                    anodes <= 4'b1111;
+                    cathodes <= 8'b11111111;
                 end
             display_AN1:
+                begin
+                    wait_counter <= 0;
+                    display_counter <= display_counter + 1;
+                    anodes <= 4'b1101;
+                    cathodes <= tens;
+                end
             wait_1:
+                begin
+                    display_counter <= 0;
+                    wait_counter <= wait_counter + 1;
+                    anodes <= 4'b1111;
+                    cathodes <= 8'b11111111;
+                end
             display_AN2:
+                begin
+                    wait_counter <= 0;
+                    display_counter <= display_counter + 1;
+                    anodes <= 4'b1011;
+                    cathodes <= hundreds;
+                end
             wait_2:
+                begin
+                    display_counter <= 0;
+                    wait_counter <= wait_counter + 1;
+                    anodes <= 4'b1111;
+                    cathodes <= 8'b11111111;
+                end
             display_AN3:
+                begin
+                    wait_counter <= 0;
+                    display_counter <= display_counter + 1;
+                    anodes <= 4'b1101;
+                    cathodes <= tens;
+                end
             wait_3:
+                begin
+                    display_counter <= 0;
+                    wait_counter <= wait_counter + 1;
+                    anodes <= 4'b1111;
+                    cathodes <= 8'b11111111;
+                end
         endcase
     end
 endmodule
