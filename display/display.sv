@@ -162,6 +162,11 @@ module display(
         case (state)
             display_AN0:
                 begin
+                    wait_counter <= 0;
+                    display_counter <= display_counter + 1;
+                    anodes <= 4'b1110;
+                    cathodes <= 
+                    
                 end
             wait_0:
             display_AN1:
