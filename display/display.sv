@@ -19,7 +19,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-/*
+/* is 0 through 9 for case statements
            11'b00000000000:
            11'b00000000001:
            11'b00000000010:
@@ -31,6 +31,8 @@
            11'b00000001000:
            11'b00000001001:
 */
+
+
 
 module display(
     input logic clock,
@@ -74,7 +76,7 @@ module display(
        //dealing with hundreds place
        hundreds_compare = display_copy/11'b00001100100; //divide the work by 100
        case(hundreds_compare)
-           11'b00000000000:
+           11'b00000000000: hundreds = 
            11'b00000000001:
            11'b00000000010:
            11'b00000000011:
