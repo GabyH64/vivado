@@ -51,7 +51,7 @@ module display(
     input logic clock,
     input logic signed [10:0] to_display,
     output logic [3:0] anodes,
-    output logic [7:0] segments
+    output logic [7:0] cathodes
     );
     
     logic signed [10:0] display_copy;
@@ -165,10 +165,11 @@ module display(
                     wait_counter <= 0;
                     display_counter <= display_counter + 1;
                     anodes <= 4'b1110;
-                    cathodes <= 
-                    
+                    cathodes <= ones;
                 end
             wait_0:
+                begin
+                end
             display_AN1:
             wait_1:
             display_AN2:
