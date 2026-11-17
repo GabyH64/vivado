@@ -27,6 +27,7 @@ module display(
     output logic [7:0] segments
     );
     
+    logic signed [10:0] display_copy;
     int display_counter = 0;
     int wait_counter = 0;
     logic [7:0] sign, hundreds, tens, ones;
@@ -47,8 +48,11 @@ module display(
     
     //taking the input and taking it apart to display the sign, hundreds, tens, and ones place
     always_comb begin
-        if (to_display < 0)
-            sign = 8'b
+        
+        if (to_display < 0) // if the display output is negative then the sign will be turned on
+            sign = 8'b10111111;
+        else // else the sign isn't on
+            sign = 8'b11111111;
     end
     
     // to change to next state
@@ -76,4 +80,3 @@ module display(
     
     end
 endmodule
-
