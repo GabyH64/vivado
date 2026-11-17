@@ -159,6 +159,17 @@ module display(
 
     // then based on the state we do different things
     always_ff @ (negedge clock) begin
-    
+        case (state)
+            display_AN0:
+                begin
+                end
+            wait_0:
+            display_AN1:
+            wait_1:
+            display_AN2:
+            wait_2:
+            display_AN3:
+            wait_3:
+        endcase
     end
 endmodule
