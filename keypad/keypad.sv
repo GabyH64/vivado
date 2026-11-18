@@ -97,6 +97,7 @@ module keypad(
             delay: 
                 if (wait_counter == 200) next_state = row0;
                 else next_state = delay;
+            default: next_state = row0;
         endcase
     end
     
