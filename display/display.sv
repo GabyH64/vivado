@@ -145,14 +145,14 @@ module display(
     // next state logic
     always_comb begin
         case (state)
-            display_AN0: if (display_counter == 20) next_state = wait_0; else next_state = display_AN0; 
-            wait_0: if (wait_counter == 20) next_state = display_AN1; else next_state = wait_0;
-            display_AN1: if (display_counter == 20) next_state = wait_1; else next_state = display_AN1;
-            wait_1: if (wait_counter == 20) next_state = display_AN2; else next_state = wait_1;
-            display_AN2: if (display_counter == 20) next_state = wait_2; else next_state = display_AN2; 
-            wait_2: if (wait_counter == 20) next_state = display_AN3; else next_state = wait_2;
-            display_AN3: if (display_counter == 20) next_state = wait_3; else next_state = display_AN3;
-            wait_3: if (wait_counter == 20) next_state = display_AN0; else next_state = wait_3;
+            display_AN0: if (display_counter == 200) next_state = wait_0; else next_state = display_AN0; 
+            wait_0: if (wait_counter == 200) next_state = display_AN1; else next_state = wait_0;
+            display_AN1: if (display_counter == 200) next_state = wait_1; else next_state = display_AN1;
+            wait_1: if (wait_counter == 200) next_state = display_AN2; else next_state = wait_1;
+            display_AN2: if (display_counter == 200) next_state = wait_2; else next_state = display_AN2; 
+            wait_2: if (wait_counter == 200) next_state = display_AN3; else next_state = wait_2;
+            display_AN3: if (display_counter == 200) next_state = wait_3; else next_state = display_AN3;
+            wait_3: if (wait_counter == 200) next_state = display_AN0; else next_state = wait_3;
             default: next_state = display_AN0;
         endcase
     end
