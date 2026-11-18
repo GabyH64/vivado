@@ -33,7 +33,16 @@ module display_tb(
         to_display = 1;
         #100;
         
-        to_display = 11'b00000000001;
+        to_display = 36;
+        #100;
+        
+        to_display = -87;
+        #100;
+        
+        to_display = 389;
+        #100;
+        
+        to_display = -843;
         #100;
         $finish;
     end
