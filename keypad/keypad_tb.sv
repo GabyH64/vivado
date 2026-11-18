@@ -34,14 +34,19 @@ module keypad_tb(
         columns = 4'b1000;
         #25;
         columns = 4'b0000;
-        #250;
+        #500;
         
         columns = 4'b0010;
-        #25
+        #25;
+        columns = 4'b0000;
+        #1500;
+        
+        columns = 4'b0100;
+        #25;
         columns = 4'b0000;
         
         
-        #1600;
+        #500;
         $finish;
     end
     
