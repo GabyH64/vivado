@@ -30,10 +30,16 @@ module keypad_tb(
         .counter2(counter2), .send_counter(send_counter), .wait_counter(wait_counter));
     
     initial begin //3200 for two whole cycles
-        #500;
+        #50;
         columns = 4'b1000;
+        #25;
+        columns = 4'b0000;
+        #250;
+        
+        columns = 4'b0010;
         #25
         columns = 4'b0000;
+        
         
         #1600;
         $finish;
