@@ -94,7 +94,46 @@ module keypad(
                 else next_state = send;
             delay: 
                 if (wait_counter == 200) next_state = row0;
-                else next_state = waiting;
+                else next_state = delay;
+        endcase
+    end
+    
+    // then based on the state we do different things
+    always_ff @ (negedge clk) begin
+        case (state)
+            row0: begin
+                counter2 <= 0;
+                send_counter <=0;
+                counter1 <= counter1 + 1;
+                rows <= 4'b0001;
+            end
+                
+            row1: begin
+                counter1 <= 0;
+                counter2 <= counter2 + 1;
+                rows <= 4'b0010;
+            end
+            
+            row2:begin
+                counter2 <= 0;
+                counter1 <= counter1 + 1;
+                rows <= 4'b0100;
+            end
+            
+            row3: begin
+                counter1 <= 0;
+                counter2 <= counter2 + 1;
+                rows <= 4'b1000;
+            end
+            
+            send: begin
+                send_counter <= send_counter + 1;
+                
+            end
+            
+            delay: begin
+            end
+            
         endcase
     end
 
