@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 10/20/2026 06:42:12 PM
+// Create Date: 11/18/2026 02:35:16 AM
 // Design Name: 
-// Module Name: memory2
+// Module Name: keypad
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,87 +20,159 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module memory2(
-    input logic [3:0] keys,
-    input logic [1:0] where_store, what_display,
-    input logic clock, write_enable,
-    input logic signed [10:0] result,
-    output logic signed [10:0] a, b,
-    output logic [10:0] display,
-    output logic [1:0] operator,
-    output logic [1:0] state
+module keypad(
+    input logic clk,
+    input logic [3:0] columns,
+    output logic [3:0] rows, keys
     );
     
-    typedef enum logic [1:0]{
-            save_a,
-            save_op,
-            save_b,
-            save_result
-        } state_t;
-        
-    state_t state = save_result; 
-    state_t next_state;  
+    int counter1, counter2, wait_counter, send_counter;
+    logic [3:0] which_row;
+    logic [3:0] which_column;
+    
+    typedef enum logic [5:0] {
+    row0,
+    row1,
+    row2,
+    row3,
+    send,
+    delay
+    } state_t;
+
+    state_t state = row1;
+    state_t next_state;
     
     // to change to next state
-    always_ff @ (posedge clock) begin
+    always_ff @ (posedge clk) begin
         state <= next_state;
-    end  
-        
-    //next state logic
+    end 
+    
+    // next state logic
     always_comb begin
         case (state)
-            save_a: begin
-                if (where_store == 2'b01) next_state = save_op; else next_state = save_a;
+            row0: begin
+                if (columns != 4'b0000) begin
+                        which_row = 4'b0001;
+                        which_column = columns;
+                        next_state = send;
+                    end
+                else if (columns == 4'b0000 && counter1 == 200) next_state = row2;
+                else next_state = row0;
             end
-            save_op: begin
-                if (where_store == 2'b10) next_state = save_b; else next_state = save_op;
+            
+            row1: begin
+                if (columns != 4'b0000) begin
+                        which_row = 4'b0010;
+                        which_column = columns;
+                        next_state = send;
+                    end
+                else if (columns == 4'b0000 && counter2 == 200) next_state = row2;
+                else next_state = row1; 
             end
-            save_b: begin
-                if (where_store == 2'b11) next_state = save_result; else next_state = save_b;
-            end 
-            save_result: begin
-                if (where_store == 2'b00) next_state = save_a ;else next_state = save_result;
+            
+            row2:begin
+                if (columns != 4'b0000) begin
+                        which_row = 4'b0100;
+                        which_column = columns;
+                        next_state = send;
+                    end
+                else if (columns == 4'b0000 && counter1 == 200) next_state = row2;
+                else next_state = row2;
             end
-            default: begin
-                next_state = save_a;
+            
+            row3:begin
+                if (columns != 4'b0000) begin
+                        which_row = 4'b1000;
+                        which_column = columns;
+                        next_state = send;
+                    end
+                else if (columns == 4'b0000 && counter1 == 200) next_state = row2;
+                else next_state = row3;
+            end
+            send:
+                if (send_counter == 20) next_state = delay;
+                else next_state = send;
+            delay: 
+                if (wait_counter == 200) next_state = row0;
+                else next_state = delay;
+        endcase
+    end
+    
+    // then based on the state we do different things
+    always_ff @ (negedge clk) begin
+        case (state)
+            row0: begin
+                counter2 <= 0;
+                send_counter <=0;
+                wait_counter <= 0;
+                counter1 <= counter1 + 1;
+                rows <= 4'b0001;
+            end
+                
+            row1: begin
+                counter1 <= 0;
+                counter2 <= counter2 + 1;
+                rows <= 4'b0010;
+            end
+            
+            row2:begin
+                counter2 <= 0;
+                counter1 <= counter1 + 1;
+                rows <= 4'b0100;
+            end
+            
+            row3: begin
+                counter1 <= 0;
+                counter2 <= counter2 + 1;
+                rows <= 4'b1000;
+            end
+            
+            send: begin
+                send_counter <= send_counter + 1;
+                case(which_row)
+                    4'b0001: begin //top row
+                        case(which_column)
+                            4'b0001: keys = 4'b0001; //1
+                            4'b0010: keys = 4'b0010; //2
+                            4'b0100: keys = 4'b0011; //3
+                            4'b1000: keys = 4'1010; //A or add
+                        endcase
+                    end
+                   
+                    4'b0010: begin //sencond from top row
+                        case(which_column)
+                            4'b0001: keys = 4'b0100; //4
+                            4'b0010: keys = 4'b0101; //5
+                            4'b0100: keys = 4'b0110; //6
+                            4'b1000: keys = 4'b1011; //B aka subtract
+                        endcase
+                    end
+                    4'b0100: begin
+                        case(which_column)
+                            4'b0001: keys = 4'b0111; //7
+                            4'b0010: keys = 4'b1000; //8
+                            4'b0100: keys = 4'b1001; //9
+                            4'b1000: keys = 4'b1100; //C aka divide
+                        endcase
+                    end
+                    4'b1000: begin
+                        case(which_column)
+                            4'b0001: keys = 4'b0000; //is the * but im making it also 0
+                            4'b0010: keys = 4'b0000; //0
+                            4'b0100: keys = 4'b1110; // # for equal sign
+                            4'b1000: keys = 4'b1101; //D aka multiply
+                        endcase
+                    end
+                endcase
+            end
+            
+            delay: begin
+                wait_counter <= wait_counter + 1;
             end
             
         endcase
     end
+
     
-    //so based on the write enable we save on neg edge so the states have a chance to run
-    always_ff @ (negedge write_enable) begin
-    case (state)
-        save_a: begin
-            a <= a*11'b00000001010 + keys;
-        end
-        save_op: begin
-            case(keys)
-                4'b1010: operator <= 2'b00; //addition
-                4'b1011: operator <= 2'b01; //subtraction
-                4'b1100: operator <= 2'b10; // division
-                4'b1101: operator <= 2'b11; //multiplication
-            endcase
-        end       
-        save_b: begin
-            b <= b*11'b00000001010 + keys;
-        end
-        save_result: begin
-            display <= result;
-            a <= 0;
-            b <= 0;
-        end
-    endcase
-   end
-   
-   //display which i'm assuming will be set depending the state of the controller
-   // do neg edge of clock because thats probably after the stuff has been set equal
-   always_ff @ (negedge clock) begin
-    case (what_display)
-        2'b00: display <= a;
-        2'b01: display <= operator;
-        2'b10: display <= b;
-        2'b11: display <= result;
-    endcase 
-   end    
+    
 endmodule
