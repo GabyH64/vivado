@@ -207,7 +207,7 @@ module display(
                     wait_counter <= 0;
                     display_counter <= display_counter + 1;
                     anodes <= 4'b0111;
-                    cathodes <= tens;
+                    cathodes <= sign;
                 end
             wait_3:
                 begin
