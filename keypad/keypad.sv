@@ -26,7 +26,7 @@ module keypad(
     output logic [3:0] rows, keys
     );
     
-    int counter1, counter2, wait_counter;
+    int counter1, counter2, wait_counter, send_counter;
     logic [3:0] which_row;
     logic [3:0] which_column;
     
@@ -90,6 +90,8 @@ module keypad(
                 else next_state = row3;
             end
             send:
+                if (send_counter == 20) next_state = delay;
+                else next_state = send;
             delay: 
                 if (wait_counter == 200) next_state = row0;
                 else next_state = waiting;
