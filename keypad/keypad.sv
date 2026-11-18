@@ -23,7 +23,9 @@
 module keypad(
     input logic clk,
     input logic [3:0] columns,
-    output logic [3:0] rows, keys
+    output logic [3:0] rows, keys,
+    output int counter1, counter2, wait_counter, send_counter,
+    output [5:0] state
     );
     
     int counter1, counter2, wait_counter, send_counter;
@@ -39,7 +41,7 @@ module keypad(
     delay
     } state_t;
 
-    state_t state = row1;
+    state_t state = row0;
     state_t next_state;
     
     // to change to next state
@@ -56,7 +58,7 @@ module keypad(
                         which_column = columns;
                         next_state = send;
                     end
-                else if (columns == 4'b0000 && counter1 == 200) next_state = row2;
+                else if (counter1 == 200) next_state = row1;
                 else next_state = row0;
             end
             
@@ -66,7 +68,7 @@ module keypad(
                         which_column = columns;
                         next_state = send;
                     end
-                else if (columns == 4'b0000 && counter2 == 200) next_state = row2;
+                else if (counter2 == 200) next_state = row2;
                 else next_state = row1; 
             end
             
@@ -76,7 +78,7 @@ module keypad(
                         which_column = columns;
                         next_state = send;
                     end
-                else if (columns == 4'b0000 && counter1 == 200) next_state = row2;
+                else if (counter1 == 200) next_state = row3;
                 else next_state = row2;
             end
             
@@ -86,7 +88,7 @@ module keypad(
                         which_column = columns;
                         next_state = send;
                     end
-                else if (columns == 4'b0000 && counter1 == 200) next_state = row2;
+                else if (counter1 == 200) next_state = row0;
                 else next_state = row3;
             end
             send:
