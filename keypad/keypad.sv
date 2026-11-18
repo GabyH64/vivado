@@ -104,6 +104,7 @@ module keypad(
             row0: begin
                 counter2 <= 0;
                 send_counter <=0;
+                wait_counter <= 0;
                 counter1 <= counter1 + 1;
                 rows <= 4'b0001;
             end
@@ -128,10 +129,45 @@ module keypad(
             
             send: begin
                 send_counter <= send_counter + 1;
-                
+                case(which_row)
+                    4'b0001: begin //top row
+                        case(which_column)
+                            4'b0001: keys = 4'b0001; //1
+                            4'b0010: keys = 4'b0010; //2
+                            4'b0100: keys = 4'b0011; //3
+                            4'b1000: keys = 4'b1010; //A or add
+                        endcase
+                    end
+                   
+                    4'b0010: begin //sencond from top row
+                        case(which_column)
+                            4'b0001: keys = 4'b0100; //4
+                            4'b0010: keys = 4'b0101; //5
+                            4'b0100: keys = 4'b0110; //6
+                            4'b1000: keys = 4'b1011; //B aka subtract
+                        endcase
+                    end
+                    4'b0100: begin
+                        case(which_column)
+                            4'b0001: keys = 4'b0111; //7
+                            4'b0010: keys = 4'b1000; //8
+                            4'b0100: keys = 4'b1001; //9
+                            4'b1000: keys = 4'b1100; //C aka divide
+                        endcase
+                    end
+                    4'b1000: begin
+                        case(which_column)
+                            4'b0001: keys = 4'b0000; //is the * but im making it also 0
+                            4'b0010: keys = 4'b0000; //0
+                            4'b0100: keys = 4'b1110; // # for equal sign
+                            4'b1000: keys = 4'b1101; //D aka multiply
+                        endcase
+                    end
+                endcase
             end
             
             delay: begin
+                wait_counter <= wait_counter + 1;
             end
             
         endcase
