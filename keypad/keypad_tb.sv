@@ -25,7 +25,7 @@ module keypad_tb(
     logic clk=0;
     logic [3:0] columns, rows, keys;
     
-    display dut ( .clk(clk), .columns(columns), .rows(rows), .keys(keys) );
+    keypad dut ( .clk(clk), .columns(columns), .rows(rows), .keys(keys) );
     
     initial begin
         #2040
