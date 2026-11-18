@@ -24,11 +24,14 @@ module keypad_tb(
     );
     logic clk=0;
     logic [3:0] columns, rows, keys;
+    logic [2:0] state;
     
-    keypad dut ( .clk(clk), .columns(columns), .rows(rows), .keys(keys) );
+    keypad dut ( .clk(clk), .columns(columns), .rows(rows), .keys(keys), .counter1(counter1), .state(state),
+        .counter2(counter2));
     
     initial begin
-        #2040
+        #8000
+        columns = 4'b1000;
         $finish;
     end
     
