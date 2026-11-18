@@ -30,20 +30,18 @@ module display_tb(
     display dut ( .clock(clock), .to_display(to_display), .anodes(anodes), .cathodes(cathodes) );
     
     initial begin
-        to_display = 1;
-        #100;
+        to_display = -1;
+        #320;
         
-        to_display = 36;
-        #100;
+        to_display = 46;
+        #320;
         
-        to_display = -87;
-        #100;
+        to_display = -398;
+        #320
         
-        to_display = 389;
-        #100;
+        to_display = 839;
+        #320;
         
-        to_display = -843;
-        #100;
         $finish;
     end
     
