@@ -42,4 +42,24 @@ module controller(
     state_t state = wait_a;
     state_t next_state;
     
+    // to change to next state
+    always_ff @ (posedge clk) begin
+        state <= next_state;
+    end 
+    
+    // next state logic
+    always_comb begin
+        case(state)
+            wait_a:
+            enable_a:
+            enable_a_off:
+            enable_op:
+            enable_op_off:
+            wait_b:
+            enable_b:
+            enable_b_off:
+            enable_result:
+        endcase
+    end
+    
 endmodule
