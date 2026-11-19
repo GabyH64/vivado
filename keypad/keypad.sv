@@ -25,7 +25,8 @@ module keypad(
     input logic [3:0] columns,
     output logic [3:0] rows, keys,
     output int counter1, counter2, wait_counter,
-    output logic [2:0] state
+    output logic [2:0] state,
+    output logic key_release
     );
     
     int counter1, counter2, wait_counter;
@@ -105,6 +106,7 @@ module keypad(
     always_ff @ (negedge clk) begin
         case (state)
             row0: begin
+                key_release <= 0;
                 counter2 <= 0;
                 wait_counter <= 0;
                 counter1 <= counter1 + 1;
@@ -169,6 +171,7 @@ module keypad(
             
             delay: begin
                 wait_counter <= wait_counter + 1;
+                key_release <= 1;
             end
             
         endcase
