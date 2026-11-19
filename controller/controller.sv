@@ -119,19 +119,49 @@ module controller(
             end
             enable_a:begin
                 enable_counter <= enable_counter + 1;
+                write_enable <= 1;
             end
-            enable_a_off:
-            a_release:
-            enable_op:
-            enable_op_off:
-            op_release:
-            wait_b:
-            enable_b:
-            enable_b_off:
-            b_release:
-            enable_result:
-            enable_result_off:
-            result_release:
+            enable_a_off: begin
+                write_enable <= 0;
+                enable_counter <= 0;
+            end
+            a_release:; //i dont think anything needs to happen here
+            enable_op: begin
+                enable_counter <= enable_counter + 1;
+                write_enable <= 1;
+                where_store <= 2'b01;
+                what_display <= 2'b01;
+            end
+            enable_op_off: begin
+                write_enable <= 0;
+                enable_counter <= 0;
+            end
+            op_release:;
+            wait_b: begin
+                enable_counter <=0;
+                where_store <= 2'b10;
+                what_display <= 2'b10;
+            end
+            enable_b: begin
+                enable_counter <= enable_counter + 1;
+                write_enable <= 1;
+            end
+            enable_b_off: begin
+                write_enable <= 0;
+                enable_counter <= 0;
+            end
+            b_release:;
+            enable_result: begin
+                enable_counter <= enable_counter + 1;
+                write_enable <= 1;
+                where_store <= 2'b11;
+                what_display <= 2'b11;
+            end
+            enable_result_off: begin
+                write_enable <= 0;
+                enable_counter <= 0;
+            end
+            result_release:;
         endcase
     end
     
