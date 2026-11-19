@@ -25,9 +25,10 @@ module controller_tb(
     logic [3:0] keys;
     logic clk=0, key_release;
     logic [1:0] what_display, where_store;
+    logic [3:0] state;
     
     controller dut ( .clk(clk), .keys(keys), .key_release(key_release), .write_enable(write_enable),
-    .where_store(where_store), .what_display(what_display));
+    .where_store(where_store), .what_display(what_display), .state(state));
     
     initial begin
     key_release = 0;
@@ -57,7 +58,7 @@ module controller_tb(
     #25;
     key_release = 0;
     #50
-    #1000
+    #10
     $finish;
     end
     
