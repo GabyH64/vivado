@@ -172,6 +172,7 @@ module keypad(
             delay: begin
                 wait_counter <= wait_counter + 1;
                 key_release <= 1;
+                keys = 4'b1111;
             end
             
         endcase
