@@ -33,13 +33,17 @@ module controller(
         wait_a,
         enable_a,
         enable_a_off,
+        a_release,
         enable_op,
         enable_op_off,
+        op_release,
         wait_b,
         enable_b,
         enable_b_off,
+        b_release,
         enable_result,
-        enable_result_off
+        enable_result_off,
+        result_release
     } state_t;
     
     state_t state = wait_a;
@@ -84,7 +88,7 @@ module controller(
                 if (enable_counter == 4) next_state = enable_result_off;
                 else next_state = enable_b; //want to keep write enable on for a sec cause i'm worried the memory will mis time it
             end
-            enable_result_off:
+            enable_result_off: next_state = wait_a;
             default: next_state = wait_a;
         endcase
     end
