@@ -24,11 +24,40 @@ module controller_tb(
     );
     logic [3:0] keys;
     logic clk=0, key_release;
+    logic [1:0] what_display, where_store;
     
     controller dut ( .clk(clk), .keys(keys), .key_release(key_release), .write_enable(write_enable),
     .where_store(where_store), .what_display(what_display));
     
     initial begin
+    key_release = 0;
+    keys = 4'b0010; // a should be 2
+    #50;
+    key_release = 1;
+    #25;
+    keys = 4'b1111;
+    key_release = 0;
+    #50
+    keys = 4'b1010; // addition
+    #50;
+    key_release = 1;
+    #25;
+    keys = 4'b1111;
+    key_release = 0;
+    #50;
+    keys = 4'b0010; //b should be 2
+    #50;
+    key_release = 1;
+    #25;
+    key_release = 0;
+    #50;
+    keys = 4'b1110; //equal sign
+    #50;
+    key_release = 1;
+    #25;
+    key_release = 0;
+    #50
+    #1000
     $finish;
     end
     
