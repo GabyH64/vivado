@@ -109,4 +109,30 @@ module controller(
         endcase
     end
     
+    // then based on the state we do different things
+    always_ff @ (negedge clk) begin
+        case(state)
+            wait_a: begin
+                enable_counter <=0;
+                where_store <= 2'b00;
+                what_display <= 2'b00;
+            end
+            enable_a:begin
+                enable_counter <= enable_counter + 1;
+            end
+            enable_a_off:
+            a_release:
+            enable_op:
+            enable_op_off:
+            op_release:
+            wait_b:
+            enable_b:
+            enable_b_off:
+            b_release:
+            enable_result:
+            enable_result_off:
+            result_release:
+        endcase
+    end
+    
 endmodule
