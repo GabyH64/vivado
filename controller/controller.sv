@@ -22,7 +22,7 @@
 
 module controller(
     input logic [3:0] keys,
-    input logic clk,
+    input logic clk, key_release,
     output logic write_enable,
     output logic [1:0] where_store, what_display
     );
@@ -67,13 +67,21 @@ module controller(
                 else next_state = enable_a; //want to keep write enable on for a sec cause i'm worried the memory will mis time it
             end
             enable_a_off: begin
-                next_state = wait_a; //one clock cycle here should be enough
+                next_state = a_release; //one clock cycle here should be enough
+            end
+            a_release: begin
+                if(key_release == 1) next_state = wait_a;
+                else next_state = a_release;
             end
             enable_op: begin
                 if (enable_counter == 4) next_state = enable_op_off;
                 else next_state = enable_op; //want to keep write enable on for a sec cause i'm worried the memory will mis time it
             end
-            enable_op_off: next_state = wait_b; //one clock cycle here should be enough
+            enable_op_off: next_state = op_release; //one clock cycle here should be enough
+            op_release: begin
+                if(key_release == 1) next_state = wait_b;
+                else next_state = op_release;
+            end
             wait_b: begin
                 if(keys <= 4'b1001) next_state = enable_b; //if 0-9 is pushed then enable write
                 else if (keys > 4'b1001) next_state = enable_result; //else is a equal and we don't account for operations so don't press it 
@@ -83,12 +91,20 @@ module controller(
                 if (enable_counter == 4) next_state = enable_b_off;
                 else next_state = enable_b; //want to keep write enable on for a sec cause i'm worried the memory will mis time it
             end
-            enable_b_off: next_state = wait_b;
+            enable_b_off: next_state = b_release;
+            b_release: begin
+                if(key_release == 1) next_state = wait_b;
+                else next_state = b_release;
+            end
             enable_result: begin
                 if (enable_counter == 4) next_state = enable_result_off;
                 else next_state = enable_b; //want to keep write enable on for a sec cause i'm worried the memory will mis time it
             end
-            enable_result_off: next_state = wait_a;
+            enable_result_off: next_state = result_release;
+            result_release: begin
+                if(key_release == 1) next_state = wait_a;
+                else next_state = result_release;
+            end
             default: next_state = wait_a;
         endcase
     end
