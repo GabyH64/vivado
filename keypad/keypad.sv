@@ -24,11 +24,11 @@ module keypad(
     input logic clk,
     input logic [3:0] columns,
     output logic [3:0] rows, keys,
-    output int counter1, counter2, wait_counter, send_counter,
+    output int counter1, counter2, wait_counter,
     output logic [2:0] state
     );
     
-    int counter1, counter2, wait_counter, send_counter;
+    int counter1, counter2, wait_counter;
     logic [3:0] which_row;
     logic [3:0] which_column;
     
@@ -92,7 +92,7 @@ module keypad(
                 else next_state = row3;
             end
             send:
-                if (send_counter == 20) next_state = delay;
+                if (columns == 4'b0000) next_state = delay;
                 else next_state = send;
             delay: 
                 if (wait_counter == 200) next_state = row0;
@@ -106,7 +106,6 @@ module keypad(
         case (state)
             row0: begin
                 counter2 <= 0;
-                send_counter <=0;
                 wait_counter <= 0;
                 counter1 <= counter1 + 1;
                 rows <= 4'b0001;
@@ -131,7 +130,6 @@ module keypad(
             end
             
             send: begin
-                send_counter <= send_counter + 1;
                 case(which_row)
                     4'b0001: begin //top row
                         case(which_column)
