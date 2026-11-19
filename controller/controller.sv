@@ -25,7 +25,8 @@ module controller(
     input logic clk, key_release,
     output logic write_enable,
     output logic [1:0] where_store, what_display,
-    output logic [3:0] state
+    output logic [3:0] state,
+    output int enable_counter
     );
     
     int enable_counter;
@@ -103,7 +104,7 @@ module controller(
             end
             enable_result_off: next_state = result_release;
             result_release: begin
-                if(key_release == 1) next_state = wait_a;
+                if(keys <= 4'b1001) next_state = wait_a;
                 else next_state = result_release;
             end
             default: next_state = wait_a;
