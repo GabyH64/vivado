@@ -25,9 +25,10 @@ module keypad_tb(
     logic clk=0;
     logic [3:0] columns, rows, keys;
     logic [2:0] state;
+    logic key_release;
     
     keypad dut ( .clk(clk), .columns(columns), .rows(rows), .keys(keys), .counter1(counter1), .state(state),
-        .counter2(counter2), .wait_counter(wait_counter));
+        .counter2(counter2), .wait_counter(wait_counter), .key_release(key_release));
     
     initial begin //3200 for two whole cycles
         columns = 4'b0000;
