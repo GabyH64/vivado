@@ -27,7 +27,7 @@ module keypad_tb(
     logic [2:0] state;
     
     keypad dut ( .clk(clk), .columns(columns), .rows(rows), .keys(keys), .counter1(counter1), .state(state),
-        .counter2(counter2), .send_counter(send_counter), .wait_counter(wait_counter));
+        .counter2(counter2), .wait_counter(wait_counter));
     
     initial begin //3200 for two whole cycles
         #50;
