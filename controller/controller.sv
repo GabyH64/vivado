@@ -24,7 +24,8 @@ module controller(
     input logic [3:0] keys,
     input logic clk, key_release,
     output logic write_enable,
-    output logic [1:0] where_store, what_display
+    output logic [1:0] where_store, what_display,
+    output logic [3:0] state
     );
     
     int enable_counter;
@@ -59,7 +60,7 @@ module controller(
         case(state)
             wait_a: begin
                 if(keys <= 4'b1001) next_state = enable_a; //if 0-9 is pushed then enable write
-                else if (keys > 4'b1001) next_state = enable_op; //else is a operation and we don't account for equal sign so don't press it 
+                else if (keys > 4'b1001 && keys < 4'b1111) next_state = enable_op; //else is a operation and we don't account for equal sign so don't press it 
                 else next_state = wait_a;
             end 
             enable_a: begin
@@ -84,7 +85,7 @@ module controller(
             end
             wait_b: begin
                 if(keys <= 4'b1001) next_state = enable_b; //if 0-9 is pushed then enable write
-                else if (keys > 4'b1001) next_state = enable_result; //else is a equal and we don't account for operations so don't press it 
+                else if (keys > 4'b1001  && keys < 4'b1111) next_state = enable_result; //else is a equal and we don't account for operations so don't press it 
                 else next_state = wait_a;
             end 
             enable_b:begin
