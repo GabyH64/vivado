@@ -27,18 +27,25 @@ module toplevel(
         output logic [7:0] cathodes,
         output logic [3:0] rows
     );
+
+        
+        logic [1:0] operator, where_store, what_display;
+        logic [10:0] a, b, result, display;
+        logic [3:0] keys;
+        logic write_enable, key_release;
+        
     
-    alu_datapath block1 ( .alu_operator(operator), .alu_a(a), .alu_b(b), .alu_result(result));
-    
-    memory2 block2 (.keys(keys), .where_store(where_store), .what_display(what_display),
-    .clock(clk), .write_enable(write_enable), .display(display), .a(a), .b(b), .result(result),
-    .operator(operator));
-    
-    display block3 (.clock(clk), .to_display(display), .anodes(anodes), .cathodes(cathodes));
-    
-    keypad block4 (.clk(clk), .columns(columns), .rows(rows), .keys(keys), .key_release(key_release));
-    
-    controller block5 (.keys(keys), .clk(clk), .write_enable(write_enable), .where_store(where_store), 
-    .what_display(what_display));
+        alu_datapath block1 ( .alu_operator(operator), .alu_a(a), .alu_b(b), .alu_result(result));
+        
+        memory2 block2 (.keys(keys), .where_store(where_store), .what_display(what_display),
+        .clock(clk), .write_enable(write_enable), .display(display), .a(a), .b(b), .result(result),
+        .operator(operator));
+        
+        display block3 (.clock(clk), .to_display(display), .anodes(anodes), .cathodes(cathodes));
+        
+        keypad block4 (.clk(clk), .columns(columns), .rows(rows), .keys(keys), .key_release(key_release));
+        
+        controller block5 (.keys(keys), .clk(clk), .write_enable(write_enable), .where_store(where_store), 
+        .what_display(what_display));
     
 endmodule
