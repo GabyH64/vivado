@@ -32,6 +32,21 @@ module toplevel_tb(
     toplevel dut ( .clk(clk), .columns(columns), .anodes(anodes), .cathodes(cathodes), .rows(rows));
     
     initial begin //3200 for two whole cycles
+        columns = 4'b0000;
+        #50;
+        columns = 4'b1000;
+        #200;
+        columns = 4'b0000;
+        #800;
+        
+        columns = 4'b0010;
+        #600;
+        columns = 4'b0000;
+        #1500;
+        
+        columns = 4'b0100;
+        #600;
+        columns = 4'b0000;
         #50
         $finish;
     end
@@ -40,5 +55,3 @@ module toplevel_tb(
         #1 clk = ~clk;
     end
 endmodule
-
-
